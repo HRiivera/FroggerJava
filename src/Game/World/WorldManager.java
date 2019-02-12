@@ -78,8 +78,11 @@ public class WorldManager {
 		 * 	Spawn Areas in Map (2 extra areas spawned off screen)
 		 *  To understand this, go down to randomArea(int yPosition) 
 		 */
-		for(int i=0; i<gridHeight+2; i++) {
+		for(int i=0; i<9; i++) {
 			SpawnedAreas.add(randomArea((-2+i)*64));
+		}
+		for(int i=9; i<gridHeight+2; i++) {
+			SpawnedAreas.add(new GrassArea(handler, (i-2)*64));				//Changes here to always spawn in Grass Area
 		}
 		////
 
@@ -186,7 +189,7 @@ public class WorldManager {
 
 				if (SpawnedHazards.get(i).GetCollision() != null
 						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-					if(SpawnedHazards.get(i).GetCollision() != null	&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) && player.getX()==512) {
+					if(SpawnedHazards.get(i).GetCollision() != null	&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) && player.getX()==513) {
 						player.setX(player.getX());
 					}else player.setX(player.getX() + 1);
 				}
@@ -275,7 +278,7 @@ public class WorldManager {
 		if (choice <=2) {
 			randInt = 64 * rand.nextInt(4);
 			SpawnedHazards.add(new Log(handler, randInt, yPosition));
-			SpawnedHazards.add(new Log(handler, randInt - 128, yPosition));
+			SpawnedHazards.add(new Log(handler, randInt - 256, yPosition));
 		}
 		else {
 		if (choice >=4){
@@ -299,8 +302,7 @@ public class WorldManager {
 
 			Random rand = new Random();
 			int randInt;
-
-
+			
 			for(int x=0; x<10;x++) {
 				randInt = rand.nextInt(10);
 				if(randInt<2) {

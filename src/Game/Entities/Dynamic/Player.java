@@ -139,6 +139,7 @@ public class Player extends EntityBase {
                
                 setX(getX()+64);
             }
+        
             facing = "RIGHT";
         }
     }
