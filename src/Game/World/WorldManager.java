@@ -71,7 +71,7 @@ public class WorldManager {
 
 		gridWidth = handler.getWidth()/64;
 		gridHeight = handler.getHeight()/64;
-		movementSpeed = 1;
+		movementSpeed = 10;
 		// movementSpeed = 20; I dare you.
 		/* 
 		 * 	Spawn Areas in Map (2 extra areas spawned off screen)
@@ -193,10 +193,8 @@ public class WorldManager {
 
 				if (SpawnedHazards.get(i).GetCollision() != null
 						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-					if(SpawnedHazards.get(i).GetCollision() != null	&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) && player.getX()>576) {
-						player.setX(player.getX());
-					}else player.setX(player.getX() + 1);
-
+					
+						player.setX(player.getX() + 1);
 				}
 			}
 			/////
@@ -212,9 +210,8 @@ public class WorldManager {
 
 				if (SpawnedHazards.get(i).GetCollision() != null
 						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-					if(SpawnedHazards.get(i).GetCollision() != null	&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) && player.getX()==0) {
-						player.setX(player.getX());
-					}else player.setX(player.getX()-1);
+					
+						player.setX(player.getX() - 1);
 				}
 			}
 			////
@@ -302,7 +299,7 @@ public class WorldManager {
 			if (choice >=4){
 				for (int x=0;x<10;x++) {
 					randInt = rand.nextInt(9);
-					if(randInt<=1) {
+					if(randInt<=2) {
 						SpawnedHazards.add(new LillyPad(handler, 64*x, yPosition));
 					}
 				}
