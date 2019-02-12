@@ -71,9 +71,8 @@ public class WorldManager {
 
 		gridWidth = handler.getWidth()/64;
 		gridHeight = handler.getHeight()/64;
-		movementSpeed = 7;
+		movementSpeed = 1;
 		// movementSpeed = 20; I dare you.
-
 		/* 
 		 * 	Spawn Areas in Map (2 extra areas spawned off screen)
 		 *  To understand this, go down to randomArea(int yPosition) 
@@ -194,7 +193,7 @@ public class WorldManager {
 
 				if (SpawnedHazards.get(i).GetCollision() != null
 						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-					if(SpawnedHazards.get(i).GetCollision() != null	&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) && player.getX()==513) {
+					if(SpawnedHazards.get(i).GetCollision() != null	&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) && player.getX()>576) {
 						player.setX(player.getX());
 					}else player.setX(player.getX() + 1);
 
@@ -302,7 +301,7 @@ public class WorldManager {
 		else {
 			if (choice >=4){
 				for (int x=0;x<10;x++) {
-					randInt = rand.nextInt(10);
+					randInt = rand.nextInt(9);
 					if(randInt<=1) {
 						SpawnedHazards.add(new LillyPad(handler, 64*x, yPosition));
 					}

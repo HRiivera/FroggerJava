@@ -19,7 +19,7 @@ public class Player extends EntityBase {
 
 
     private Rectangle player;
-    private String facing = "UP";
+    public String facing = "UP";
     private Boolean moving = false;
     private int moveCoolDown=0;
 
@@ -64,14 +64,17 @@ public class Player extends EntityBase {
         }
         index=0;
         
-      ////
-        int xpos = this.getX();
-    	////
+
         
         /////////////////MOVE UP///////////////
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP")){
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP") && getY() > 64) {
             moving=true;
-        }else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && !facing.equals("UP")){
+            
+        }else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP") && getY() <= 0){
+        	moving=false;
+        }
+        
+        else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && !facing.equals("UP")){
             if(facing.equals("DOWN")) {
                 if(this.getX() % 64 >= 64 / 2 ) {
 
@@ -93,7 +96,7 @@ public class Player extends EntityBase {
         }
 
         /////////////////MOVE LEFT///////////////
-        else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_A) && !moving && facing.equals("LEFT") && xpos == 0){
+        else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_A) && !moving && facing.equals("LEFT") && getX() == 0){
         	moving=false;
         } else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_A) && !moving && facing.equals("LEFT")){
             moving=true;
@@ -117,7 +120,7 @@ public class Player extends EntityBase {
         }
 
         /////////////////MOVE RIGHT///////////////
-        else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_D) && !moving && facing.equals("RIGHT") && xpos == 576){
+        else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_D) && !moving && facing.equals("RIGHT") && getX() == 576){
            moving=false;
         }else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_D) && !moving && facing.equals("RIGHT")) {
         	moving=true;
