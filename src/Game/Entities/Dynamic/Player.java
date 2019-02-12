@@ -238,6 +238,16 @@ public class Player extends EntityBase {
 
         return dest;
     }
+    ////
+    public String HazardsRightAdjust() {
+    	String RightAdjust;
+    	if(facing.equals("RIGHT")) {
+    		return RightAdjust="RIGHT";
+    	}
+    	else 
+    		return RightAdjust ="FALSE";
+    }
+    ////
 
     public Rectangle getPlayerCollision() {
     	return player;
