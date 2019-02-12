@@ -28,7 +28,7 @@ public class WorldManager {
 
 	private ArrayList<BaseArea> SpawnedAreas;		// Areas currently on world
 	////
-	
+
 	////
 	private ArrayList<StaticBase> SpawnedHazards;			// Hazards currently on world.
 
@@ -71,19 +71,24 @@ public class WorldManager {
 
 		gridWidth = handler.getWidth()/64;
 		gridHeight = handler.getHeight()/64;
-		movementSpeed = 1;
+		movementSpeed = 7;
 		// movementSpeed = 20; I dare you.
 
 		/* 
 		 * 	Spawn Areas in Map (2 extra areas spawned off screen)
 		 *  To understand this, go down to randomArea(int yPosition) 
 		 */
-		for(int i=0; i<9; i++) {
+		for(int i=0; i<8; i++) {
 			SpawnedAreas.add(randomArea((-2+i)*64));
 		}
-		for(int i=9; i<gridHeight+2; i++) {
-			SpawnedAreas.add(new GrassArea(handler, (i-2)*64));				//Changes here to always spawn in Grass Area
+		for(int i=8; i<gridHeight+2; i++) {
+			SpawnedAreas.add(new GrassArea(handler, (i-2)*64));			//Changes here to always spawn in Grass Area
 		}
+		SpawnedHazards.add(new Tree(handler, 0*64, 6*64));
+		SpawnedHazards.add(new Tree(handler, 2*64, 6*64));
+		SpawnedHazards.add(new Tree(handler, 6*64, 6*64));				//spawns trees symmetrically
+		SpawnedHazards.add(new Tree(handler, 8*64, 6*64));
+
 		////
 
 		player.setX((gridWidth/2)*64);
@@ -95,17 +100,17 @@ public class WorldManager {
 		for (int x = 0; x < gridWidth; x++) {
 			for (int y = 0; y < gridHeight; y++) {
 				grid[x][y]=ID.EMPTY;
-				
+
 				/*
 				for SpawnedArea = WaterArea&&SpawnedHazard,LilyPad-> get(yPosition)
 				yPosition + 1 != WaterArea&&SpawnedHazard,LilyPad
-				
+
 				or ""yPosition + 1, AreasAvailable<> = AreasAvailable- AreasAvailable(WaterArea)
-			    
+
 				^
 				|
 				Or Some Derivative Of That Idea.
-				*/
+				 */
 			}
 		}
 	}
@@ -192,6 +197,7 @@ public class WorldManager {
 					if(SpawnedHazards.get(i).GetCollision() != null	&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) && player.getX()==513) {
 						player.setX(player.getX());
 					}else player.setX(player.getX() + 1);
+
 				}
 			}
 			/////
@@ -202,25 +208,38 @@ public class WorldManager {
 				// Verifies the hazards Rectangles aren't null and
 				// If the player Rectangle intersects with the Log or Turtle Rectangle, then
 				// move player to the right.
-				
-				
-				
+
+
+
 				if (SpawnedHazards.get(i).GetCollision() != null
 						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-				if(SpawnedHazards.get(i).GetCollision() != null	&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) && player.getX()==0) {
-					player.setX(player.getX());
-				}else player.setX(player.getX()-1);
-			}
+					if(SpawnedHazards.get(i).GetCollision() != null	&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision()) && player.getX()==0) {
+						player.setX(player.getX());
+					}else player.setX(player.getX()-1);
+				}
 			}
 			////
-			
+
 			////
-			
+
 			// if hazard has passed the screen height, then remove this hazard.
 			if (SpawnedHazards.get(i).getY() > handler.getHeight()) {
 				SpawnedHazards.remove(i);
-				
+
 			}
+			if(SpawnedHazards.get(i) instanceof Log) {
+				if (SpawnedHazards.get(i).getX() > handler.getWidth()) {
+					SpawnedHazards.set(i, new Log(handler, -128, SpawnedHazards.get(i).getY()));
+				}
+			}
+			else if(SpawnedHazards.get(i) instanceof Turtle) {
+				if (SpawnedHazards.get(i).getX() < 0) {
+					SpawnedHazards.set(i, new Turtle(handler, handler.getWidth()+64, SpawnedHazards.get(i).getY()));
+				}
+			}
+
+
+
 		}
 	}
 
@@ -281,34 +300,34 @@ public class WorldManager {
 			SpawnedHazards.add(new Log(handler, randInt - 256, yPosition));
 		}
 		else {
-		if (choice >=4){
-		for (int x=0;x<10;x++) {
-			randInt = rand.nextInt(10);
-		if(randInt<=1) {
-			SpawnedHazards.add(new LillyPad(handler, 64*x, yPosition));
+			if (choice >=4){
+				for (int x=0;x<10;x++) {
+					randInt = rand.nextInt(10);
+					if(randInt<=1) {
+						SpawnedHazards.add(new LillyPad(handler, 64*x, yPosition));
+					}
 				}
 			}
-		}
-		
-		else {
-			randInt = 64 * rand.nextInt(3);
-			SpawnedHazards.add(new Turtle(handler, 576, yPosition));
-		
-		}
-	}
-	}
-		////
-		private void SpawnTree(int yPosition) {
 
-			Random rand = new Random();
-			int randInt;
-			
-			for(int x=0; x<10;x++) {
-				randInt = rand.nextInt(10);
-				if(randInt<2) {
-					SpawnedHazards.add(new Tree(handler,64*x, yPosition));
-				}
-				}
+			else {
+				randInt = 64 * rand.nextInt(3);
+				SpawnedHazards.add(new Turtle(handler, 576, yPosition));
+
+			}
 		}
-		////
 	}
+	////
+	private void SpawnTree(int yPosition) {
+
+		Random rand = new Random();
+		int randInt;
+
+		for(int x=0; x<10;x++) {
+			randInt = rand.nextInt(10);
+			if(randInt<2) {
+				SpawnedHazards.add(new Tree(handler,64*x, yPosition));
+			}
+		}
+	}
+	////
+}
