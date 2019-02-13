@@ -47,7 +47,7 @@ public class WorldManager {
 	private ID[][] grid;									
 	private int gridWidth,gridHeight;						// Size of the grid. 
 	private int movementSpeed;								// Movement of the tiles going downwards.
-
+	private int counter = 0;								//Counter for lilly pads.
 
 	public WorldManager(Handler handler) {
 		this.handler = handler;
@@ -71,7 +71,7 @@ public class WorldManager {
 
 		gridWidth = handler.getWidth()/64;
 		gridHeight = handler.getHeight()/64;
-		movementSpeed = 10;
+		movementSpeed = 1;
 		// movementSpeed = 20; I dare you.
 		/* 
 		 * 	Spawn Areas in Map (2 extra areas spawned off screen)
@@ -193,8 +193,8 @@ public class WorldManager {
 
 				if (SpawnedHazards.get(i).GetCollision() != null
 						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-					
-						player.setX(player.getX() + 1);
+
+					player.setX(player.getX() + 1);
 				}
 			}
 			/////
@@ -210,8 +210,8 @@ public class WorldManager {
 
 				if (SpawnedHazards.get(i).GetCollision() != null
 						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
-					
-						player.setX(player.getX() - 1);
+
+					player.setX(player.getX() - 1);
 				}
 			}
 			////
@@ -232,10 +232,8 @@ public class WorldManager {
 				if (SpawnedHazards.get(i).getX() < 0) {
 					SpawnedHazards.set(i, new Turtle(handler, handler.getWidth()+64, SpawnedHazards.get(i).getY()));
 				}
+
 			}
-
-
-
 		}
 	}
 
@@ -288,7 +286,14 @@ public class WorldManager {
 	private void SpawnHazard(int yPosition) {
 		Random rand = new Random();
 		int randInt;
-		int choice = rand.nextInt(7);
+		int choice = 0;
+		counter = counter + 1;
+		if (counter%2 == 0) {
+			choice = rand.nextInt(10);
+		}													//Lillypads can only spawn in even counters
+		else {
+			choice = rand.nextInt(5);
+		}
 		// Chooses between Log or Lillypad
 		if (choice <=2) {
 			randInt = 64 * rand.nextInt(4);
@@ -296,7 +301,7 @@ public class WorldManager {
 			SpawnedHazards.add(new Log(handler, randInt - 256, yPosition));
 		}
 		else {
-			if (choice >=4){
+			if (choice >=5){
 				for (int x=0;x<10;x++) {
 					randInt = rand.nextInt(9);
 					if(randInt<=2) {
