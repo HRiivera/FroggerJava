@@ -213,11 +213,10 @@ public class WorldManager {
 				player.setX(SpawnedHazards.get(i).getX()+64-SpawnedHazards.get(i).getX()%64);
 			}
 			else if(player.facing.equals("UP")) {
-				player.moving =false;
-				player.setY(player.getY()+4);
+				
+				player.setY(SpawnedHazards.get(i).getY()+126+movementSpeed);
 			}else if(player.facing.equals("DOWN")) {
-				player.moving =false;
-				player.setY(player.getY()-4);
+				player.setY(SpawnedHazards.get(i).getY()-64-movementSpeed);
 			}
 			}
 			}

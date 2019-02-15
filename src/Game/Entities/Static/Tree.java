@@ -20,7 +20,7 @@ public class Tree extends StaticBase {
 	public void render(Graphics g) {
 		/////
 		g.drawImage(Images.object[2], this.getX(), this.getY(), 64, 64, null);
-     tree = new Rectangle(this.getX()+1, this.getY()+1, 63, 63);
+     tree = new Rectangle(this.getX(), this.getY(), getWidth(), getHeight());
      ////
 	}
 	

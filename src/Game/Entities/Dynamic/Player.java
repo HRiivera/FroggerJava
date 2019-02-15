@@ -77,8 +77,8 @@ public class Player extends EntityBase {
         else if(getX() <0 && facing.equals("RIGHT") == false) {
         	this.setX(0);
         }
-        ////
-        
+        if(getY()>getHeight())
+        	this.setY(this.getHeight()+64);
         ////
         
         /////////////////MOVE UP///////////////
@@ -126,7 +126,8 @@ public class Player extends EntityBase {
         /////////////////MOVE DOWN///////////////
         else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S) && !moving && facing.equals("DOWN")){
             moving=true;
-        }else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S) && !moving && !facing.equals("DOWN")){
+        }
+        else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S) && !moving && !facing.equals("DOWN")){
             reGrid();
             if(facing.equals("RIGHT")){
                 setX(getX()-64);
@@ -256,17 +257,6 @@ public class Player extends EntityBase {
 
         return dest;
     }
-    ////
-    public String HazardsRightAdjust() {
-    	String RightAdjust;
-    	if(facing.equals("RIGHT")) {
-    		return RightAdjust="RIGHT";
-    	}
-    	else 
-    		return RightAdjust ="FALSE";
-    }
-    ////
-
     public Rectangle getPlayerCollision() {
     	return player;
     }
