@@ -36,7 +36,7 @@ public class Turtle extends StaticBase {
 			
 			if (!WentUnderWater()) {
 				g.drawImage(anim.getCurrentFrame(), this.getX(), this.getY(), -80, 64, null);	
-				turtle = new Rectangle(this.getX()-13, this.getY(), 15, 55);
+				turtle = new Rectangle(this.getX()-32, this.getY(), 15, 55);
 			}
 			else {
 				g.drawImage(anim.getCurrentFrame(), this.getX(), this.getY(), -80, 64, null);

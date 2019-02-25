@@ -77,8 +77,6 @@ public class Player extends EntityBase {
         else if(getX() <0 && facing.equals("RIGHT") == false) {
         	this.setX(0);
         }
-        if(getY()>getHeight())
-        	this.setY(this.getHeight()+64);
         ////
         
         /////////////////MOVE UP///////////////

@@ -1,6 +1,11 @@
 package Main;
 
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+
 import Display.DisplayScreen;
+import Game.GameStates.GameOverState;
 import Game.GameStates.GameState;
 import Game.GameStates.MenuState;
 import Game.GameStates.PauseState;
@@ -10,10 +15,6 @@ import Input.MouseManager;
 import Resources.Images;
 import Resources.MusicHandler;
 import UI.UIObject;
-
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 /**
  * Created by AlexVR on 7/1/2018.
@@ -44,6 +45,7 @@ public class GameSetUp implements Runnable {
     public State gameState;
     public State menuState;
     public State pauseState;
+    public State gameOverState;
 
     //Res.music
     public MusicHandler musicHandler;
@@ -78,6 +80,7 @@ public class GameSetUp implements Runnable {
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
         pauseState = new PauseState(handler);
+        gameOverState = new GameOverState(handler);
 
         State.setState(menuState);
 
@@ -128,10 +131,11 @@ public class GameSetUp implements Runnable {
                 delta--;
             }
 
-            if(timer >= 1000000000){
-                ticks = 0;
-                timer = 0;
-            }
+            if(timer >= 1000000000) {
+				System.out.println("Ticks and frames" + ticks);
+				ticks = 0;
+				timer = 0;
+			}
         }
 
         stop();

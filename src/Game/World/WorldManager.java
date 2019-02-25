@@ -294,6 +294,7 @@ public class WorldManager {
 		Random rand = new Random();
 		int randInt;
 		int choice = 0;
+		int numbOfSpawns = rand.nextInt(4) + 1;
 		counter = counter + 1;
 		if (counter%2 == 0) {
 			choice = rand.nextInt(10);
@@ -304,26 +305,30 @@ public class WorldManager {
 		// Chooses between Log or Lillypad
 		if (choice <=2) {
 			randInt = 64 * rand.nextInt(4);
-			getSpawnedHazards().add(new Log(handler, randInt, yPosition));
-			getSpawnedHazards().add(new Log(handler, randInt - 256, yPosition));
+			
+			for(int i=0;i<numbOfSpawns;i++) {
+							SpawnedHazards.add(new Log(handler,i*192, yPosition));
+			}
+
 		}
 		else {
 			if (choice >=5){
 				for (int x=0;x<10;x++) {
 					randInt = rand.nextInt(9);
 					if(randInt<=2) {
-						getSpawnedHazards().add(new LillyPad(handler, 64*x, yPosition));
+						SpawnedHazards.add(new LillyPad(handler, 64*x, yPosition));
 					}
 				}
 			}
 
 			else {
-				randInt = 64 * rand.nextInt(3);
-				getSpawnedHazards().add(new Turtle(handler, 576, yPosition));
-
+				for(int i=0;i<numbOfSpawns;i++) {
+				SpawnedHazards.add(new Turtle(handler, 576 - i*192, yPosition));
+				}
+			}
 			}
 		}
-	}
+	
 	////
 	private void SpawnTree(int yPosition) {
 
