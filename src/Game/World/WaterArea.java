@@ -1,6 +1,7 @@
 package Game.World;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Random;
 import Main.Handler;
 import Resources.Animation;
@@ -9,6 +10,7 @@ import Resources.Images;
 public class WaterArea extends BaseArea {
 
     private Animation anim;
+    private Rectangle waterArea;
 
     
     WaterArea(Handler handler, int yPosition) {
@@ -17,6 +19,7 @@ public class WaterArea extends BaseArea {
         anim=new Animation(384,Images.Water,new Random().nextInt(3));
     }
 
+    
     @Override
     public void tick() {
         anim.tick();	// Animation frame movement.
@@ -27,6 +30,11 @@ public class WaterArea extends BaseArea {
     public void render(Graphics g) {
         for (int i = 0; i < 9; i++) {
             g.drawImage(anim.getCurrentFrame(), i*64, yPosition,64,66, null);
+            waterArea = new Rectangle(i*64, yPosition,64,66);
         }
+    }
+    public Rectangle GetCollision() {
+    	
+    	return waterArea;
     }
 }

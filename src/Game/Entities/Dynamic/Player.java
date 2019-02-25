@@ -1,6 +1,8 @@
 package Game.Entities.Dynamic;
 
 import Game.Entities.EntityBase;
+import Game.Entities.Static.Tree;
+import Game.World.WorldManager;
 import Main.Handler;
 import Resources.Images;
 import UI.UIManager;
@@ -20,7 +22,7 @@ public class Player extends EntityBase {
 
     private Rectangle player;
     public String facing = "UP";
-    private Boolean moving = false;
+    public Boolean moving = false;
     private int moveCoolDown=0;
 
     private int index =0;
@@ -69,12 +71,13 @@ public class Player extends EntityBase {
         else if(getX() > 512 && facing.equals("RIGHT") == false) {
         	this.setX(512);
         }
-        else if(getX() < 64 && facing.contentEquals("RIGHT")) {				
+        else if(getX() < 64 && facing.equals("RIGHT")) {				
         	this.setX(64);
         }
-        else if(getX() <0 && facing.contentEquals("RIGHT") == false) {
+        else if(getX() <0 && facing.equals("RIGHT") == false) {
         	this.setX(0);
         }
+        ////
         
         /////////////////MOVE UP///////////////
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP") && getY() > 64) {
@@ -121,7 +124,8 @@ public class Player extends EntityBase {
         /////////////////MOVE DOWN///////////////
         else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S) && !moving && facing.equals("DOWN")){
             moving=true;
-        }else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S) && !moving && !facing.equals("DOWN")){
+        }
+        else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S) && !moving && !facing.equals("DOWN")){
             reGrid();
             if(facing.equals("RIGHT")){
                 setX(getX()-64);
@@ -251,17 +255,6 @@ public class Player extends EntityBase {
 
         return dest;
     }
-    ////
-    public String HazardsRightAdjust() {
-    	String RightAdjust;
-    	if(facing.equals("RIGHT")) {
-    		return RightAdjust="RIGHT";
-    	}
-    	else 
-    		return RightAdjust ="FALSE";
-    }
-    ////
-
     public Rectangle getPlayerCollision() {
     	return player;
     }
