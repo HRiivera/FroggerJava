@@ -65,7 +65,7 @@ public class WorldManager {
 		StaticEntitiesAvailables.add(new Turtle(handler, 0, 0));
 
 		SpawnedAreas = new ArrayList<>();
-		SpawnedHazards = new ArrayList<>();
+		setSpawnedHazards(new ArrayList<>());
 
 		player = new Player(handler);       
 
@@ -83,10 +83,10 @@ public class WorldManager {
 		for(int i=8; i<gridHeight+2; i++) {
 			SpawnedAreas.add(new GrassArea(handler, (i-2)*64));			//Changes here to always spawn in Grass Area
 		}
-		SpawnedHazards.add(new Tree(handler, 0*64, 6*64));
-		SpawnedHazards.add(new Tree(handler, 2*64, 6*64));
-		SpawnedHazards.add(new Tree(handler, 6*64, 6*64));				//spawns trees symmetrically
-		SpawnedHazards.add(new Tree(handler, 8*64, 6*64));
+		getSpawnedHazards().add(new Tree(handler, 0*64, 6*64));
+		getSpawnedHazards().add(new Tree(handler, 2*64, 6*64));
+		getSpawnedHazards().add(new Tree(handler, 6*64, 6*64));				//spawns trees symmetrically
+		getSpawnedHazards().add(new Tree(handler, 8*64, 6*64));
 
 		////
 
@@ -99,17 +99,6 @@ public class WorldManager {
 		for (int x = 0; x < gridWidth; x++) {
 			for (int y = 0; y < gridHeight; y++) {
 				grid[x][y]=ID.EMPTY;
-
-				/*
-				for SpawnedArea = WaterArea&&SpawnedHazard,LilyPad-> get(yPosition)
-				yPosition + 1 != WaterArea&&SpawnedHazard,LilyPad
-
-				or ""yPosition + 1, AreasAvailable<> = AreasAvailable- AreasAvailable(WaterArea)
-
-				^
-				|
-				Or Some Derivative Of That Idea.
-				 */
 			}
 		}
 	}
@@ -149,7 +138,7 @@ public class WorldManager {
 		for (BaseArea area : SpawnedAreas) {
 			area.tick();
 		}
-		for (StaticBase hazard : SpawnedHazards) {
+		for (StaticBase hazard : getSpawnedHazards()) {
 			hazard.tick();
 		}
 
@@ -182,24 +171,24 @@ public class WorldManager {
 
 	private void HazardMovement() {
 
-		for (int i = 0; i < SpawnedHazards.size(); i++) {
+		for (int i = 0; i < getSpawnedHazards().size(); i++) {
 
 			// Moves hazard down
-			SpawnedHazards.get(i).setY(SpawnedHazards.get(i).getY() + movementSpeed);
+			getSpawnedHazards().get(i).setY(getSpawnedHazards().get(i).getY() + movementSpeed);
 
 			// Moves Log or Turtle to the right
-			if (SpawnedHazards.get(i) instanceof Log) {
-				SpawnedHazards.get(i).setX(SpawnedHazards.get(i).getX() + 1);
+			if (getSpawnedHazards().get(i) instanceof Log) {
+				getSpawnedHazards().get(i).setX(getSpawnedHazards().get(i).getX() + 1);
 
-				if (SpawnedHazards.get(i).GetCollision() != null
-						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
+				if (getSpawnedHazards().get(i).GetCollision() != null
+						&& player.getPlayerCollision().intersects(getSpawnedHazards().get(i).GetCollision())) {
 
 					player.setX(player.getX() + 1);
 				}
 			}
 			/////
-			if(SpawnedHazards.get(i) instanceof Turtle) {
-				SpawnedHazards.get(i).setX(SpawnedHazards.get(i).getX() - 1);
+			if(getSpawnedHazards().get(i) instanceof Turtle) {
+				getSpawnedHazards().get(i).setX(getSpawnedHazards().get(i).getX() - 1);
 				/////
 
 				// Verifies the hazards Rectangles aren't null and
@@ -208,32 +197,50 @@ public class WorldManager {
 
 
 
-				if (SpawnedHazards.get(i).GetCollision() != null
-						&& player.getPlayerCollision().intersects(SpawnedHazards.get(i).GetCollision())) {
+				if (getSpawnedHazards().get(i).GetCollision() != null
+						&& player.getPlayerCollision().intersects(getSpawnedHazards().get(i).GetCollision())) {
 
 					player.setX(player.getX() - 1);
 				}
 			}
-			////
-
+			////     //Tree Boundries
+			if(getSpawnedHazards().get(i) instanceof Tree) {
+				if (getSpawnedHazards().get(i).GetCollision() != null
+				&& player.getPlayerCollision().intersects(getSpawnedHazards().get(i).GetCollision())) {
+			if(player.facing=="RIGHT") {
+				player.setX(SpawnedHazards.get(i).getX()-SpawnedHazards.get(i).getX()%64);
+			}else if(player.facing=="LEFT") {
+				player.setX(SpawnedHazards.get(i).getX()+64-SpawnedHazards.get(i).getX()%64);
+			}
+			else if(player.facing.equals("UP")) {
+				
+				player.setY(SpawnedHazards.get(i).getY()+126+movementSpeed);
+			}else if(player.facing.equals("DOWN")) {
+				player.setY(SpawnedHazards.get(i).getY()-64-movementSpeed);
+			}
+			}
+			}
 			////
 
 			// if hazard has passed the screen height, then remove this hazard.
-			if (SpawnedHazards.get(i).getY() > handler.getHeight()) {
-				SpawnedHazards.remove(i);
+			if (getSpawnedHazards().get(i).getY() > handler.getHeight()) {
+				getSpawnedHazards().remove(i);
 
 			}
-			if(SpawnedHazards.get(i) instanceof Log) {
-				if (SpawnedHazards.get(i).getX() > handler.getWidth()) {
-					SpawnedHazards.set(i, new Log(handler, -128, SpawnedHazards.get(i).getY()));
+			if(getSpawnedHazards().get(i) instanceof Log) {
+				if (getSpawnedHazards().get(i).getX() > handler.getWidth()) {
+					getSpawnedHazards().set(i, new Log(handler, -64, getSpawnedHazards().get(i).getY()));
 				}
 			}
-			else if(SpawnedHazards.get(i) instanceof Turtle) {
-				if (SpawnedHazards.get(i).getX() < 0) {
-					SpawnedHazards.set(i, new Turtle(handler, handler.getWidth()+64, SpawnedHazards.get(i).getY()));
+			else if(getSpawnedHazards().get(i) instanceof Turtle) {
+				if (getSpawnedHazards().get(i).getX() < 0) {
+					getSpawnedHazards().set(i, new Turtle(handler, handler.getWidth()+64, getSpawnedHazards().get(i).getY()));
 				}
 
 			}
+			
+			
+			
 		}
 	}
 
@@ -244,7 +251,7 @@ public class WorldManager {
 			area.render(g);
 		}
 
-		for (StaticBase hazards : SpawnedHazards) {
+		for (StaticBase hazards : getSpawnedHazards()) {
 			hazards.render(g);
 
 		}
@@ -318,11 +325,10 @@ public class WorldManager {
 				for(int i=0;i<numbOfSpawns;i++) {
 				SpawnedHazards.add(new Turtle(handler, 576 - i*192, yPosition));
 				}
-
+			}
 			}
 		}
-	}
-	////
+	
 	////
 	private void SpawnTree(int yPosition) {
 
@@ -332,9 +338,17 @@ public class WorldManager {
 		for(int x=0; x<10;x++) {
 			randInt = rand.nextInt(10);
 			if(randInt<2) {
-				SpawnedHazards.add(new Tree(handler,64*x, yPosition));
+				getSpawnedHazards().add(new Tree(handler,64*x, yPosition));
 			}
 		}
 	}
 	////
+
+	public ArrayList<StaticBase> getSpawnedHazards() {
+		return SpawnedHazards;
+	}
+
+	public void setSpawnedHazards(ArrayList<StaticBase> spawnedHazards) {
+		SpawnedHazards = spawnedHazards;
+	}
 }

@@ -1,11 +1,13 @@
 package Game.GameStates;
 
-import Game.Entities.EntityManager;
-import Game.World.WorldManager;
-import Main.Handler;
-import java.awt.*;
+import java.awt.Graphics;
 
 import com.sun.glass.events.KeyEvent;
+
+import Game.Entities.EntityManager;
+import Game.Entities.Dynamic.Player;
+import Game.World.WorldManager;
+import Main.Handler;
 
 /**
  * Created by AlexVR on 7/1/2018.
@@ -16,6 +18,8 @@ import com.sun.glass.events.KeyEvent;
  * The WorldManager Class is constructed.
  */
 public class GameState extends State {
+	
+	private Player player;
 
 
     public GameState(Handler handler){
@@ -23,6 +27,7 @@ public class GameState extends State {
         handler.setEntityManager(new EntityManager(handler));
         handler.setWorldManager(new WorldManager(handler));
 
+        player = new Player(handler);
     }
 
 
@@ -32,6 +37,7 @@ public class GameState extends State {
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
         	State.setState(handler.getGame().pauseState);
         }
+       
 
     }
 
