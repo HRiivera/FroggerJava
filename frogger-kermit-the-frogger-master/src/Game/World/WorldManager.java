@@ -160,7 +160,6 @@ public class WorldManager {
 		}
 
 		HazardMovement();
-
 		player.tick();
 		//make player move the same as the areas
 		player.setY(player.getY()+movementSpeed); 
@@ -341,6 +340,7 @@ public class WorldManager {
 				getSpawnedHazards().add(new Tree(handler,64*x, yPosition));
 			}
 		}
+		
 	}
 	////
 
