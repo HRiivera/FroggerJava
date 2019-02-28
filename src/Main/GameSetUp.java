@@ -5,7 +5,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import Display.DisplayScreen;
-import Game.GameStates.GameOverState;
 import Game.GameStates.GameState;
 import Game.GameStates.MenuState;
 import Game.GameStates.PauseState;
@@ -80,7 +79,6 @@ public class GameSetUp implements Runnable {
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
         pauseState = new PauseState(handler);
-        gameOverState = new GameOverState(handler);
 
         State.setState(menuState);
 
@@ -132,7 +130,7 @@ public class GameSetUp implements Runnable {
             }
 
             if(timer >= 1000000000) {
-				System.out.println("Ticks and frames" + ticks);
+			
 				ticks = 0;
 				timer = 0;
 			}
