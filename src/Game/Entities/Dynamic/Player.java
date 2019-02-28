@@ -6,7 +6,7 @@ import Game.World.WorldManager;
 import Main.Handler;
 import Resources.Images;
 import UI.UIManager;
-import java.awt.Graphics;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -279,7 +279,8 @@ public class Player extends EntityBase {
 			g.drawImage(rotateClockwise90(Images.Player[index]), getX(), getY(), -1 * getWidth(), getHeight(), null);
 			break;
 		}
-		g.drawString(String.valueOf(this.Score),handler.getWidth()-50,50);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 50));
+		g.drawString(String.valueOf(this.Score),handler.getWidth()-75,50);
 
 
 		UpdatePlayerRectangle(g);

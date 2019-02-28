@@ -5,6 +5,7 @@ import Game.Entities.Static.LillyPad;
 import Game.Entities.Static.Log;
 import Game.Entities.Static.StaticBase;
 import Game.Entities.Static.Tree;
+import Game.Entities.Static.Grass;
 import Game.Entities.Static.Turtle;
 import Main.Handler;
 import UI.UIManager;
@@ -63,6 +64,7 @@ public class WorldManager {
 		StaticEntitiesAvailables.add(new Log(handler, 0, 0));
 		StaticEntitiesAvailables.add(new Tree(handler,0,0));
 		StaticEntitiesAvailables.add(new Turtle(handler, 0, 0));
+		StaticEntitiesAvailables.add(new Grass(handler, 0, 0));
 
 		SpawnedAreas = new ArrayList<>();
 		setSpawnedHazards(new ArrayList<>());
@@ -338,6 +340,9 @@ public class WorldManager {
 			randInt = rand.nextInt(10);
 			if(randInt<2) {
 				getSpawnedHazards().add(new Tree(handler,64*x, yPosition));
+			}
+			else if(randInt>=8) {
+				getSpawnedHazards().add(new Grass(handler,64*x,yPosition));
 			}
 		}
 		

@@ -82,7 +82,7 @@ public class GameSetUp implements Runnable {
 
         State.setState(menuState);
 
-        musicHandler.set_changeMusic("res/music/Undertale OST 100 - Megalovania.wav");
+        musicHandler.set_changeMusic("res/music/Jumper - Castle Crashers.mp3");
         musicHandler.play();
         musicHandler.setLoop(true);
         musicHandler.setVolume(0.25);
