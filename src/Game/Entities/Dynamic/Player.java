@@ -280,6 +280,7 @@ public class Player extends EntityBase {
 			break;
 		}
 		g.setFont(new Font("TimesRoman", Font.BOLD, 50));
+		g.setColor(Color.RED);
 		g.drawString(String.valueOf(this.Score),handler.getWidth()-75,50);
 
 
