@@ -182,6 +182,9 @@ public class WorldManager {
 						&& player.getPlayerCollision().intersects(SpawnedHazards.get(j).GetCollision())==false) {
 					State.setState(handler.getGame().gameOverState);
 				}
+				else if(player.getY()> handler.getHeight()) {
+					State.setState(handler.getGame().gameOverState);
+				}
 			}
 		}
 		
