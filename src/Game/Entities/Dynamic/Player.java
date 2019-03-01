@@ -33,7 +33,7 @@ public class Player extends EntityBase {
 
 	private int index =0;
 
-	private int Score=0;
+	public int Score=0;
 	private int SubScore=0;
 	private boolean collided = false;
 	private boolean pointCooldown = false;

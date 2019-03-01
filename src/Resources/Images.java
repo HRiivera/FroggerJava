@@ -25,6 +25,7 @@ public class Images {
     public static BufferedImage Pause;
     public static BufferedImage[] Resume;
     public static BufferedImage[] BTitle;
+    public static BufferedImage GameOver;
     public static BufferedImage[] Options;
     public static ImageIcon icon;
     public static String str;
@@ -63,8 +64,8 @@ public class Images {
         try {
             playerSheet = new SpriteSheet(ImageIO.read(getClass().getResourceAsStream("/res/Sheets/gameSprites.png")));
             WaterSheet = new SpriteSheet(ImageIO.read(getClass().getResourceAsStream("/res/Sheets/water.png")));
-
-            title = ImageIO.read(getClass().getResourceAsStream("/res/Sheets/Frogger2.png"));
+            GameOver = ImageIO.read(getClass().getResourceAsStream("/res/Sheets/deadkermit.png"));
+            title = ImageIO.read(getClass().getResourceAsStream("/res/Sheets/kermit.png"));
             Pause = ImageIO.read(getClass().getResourceAsStream("/res/Buttons/Pause.png"));
             Resume[0] = ImageIO.read(getClass().getResourceAsStream("/res/Buttons/ResumeButton.png"));
             Resume[1] = ImageIO.read(getClass().getResourceAsStream("/res/Buttons/ResumeButton2.png"));
