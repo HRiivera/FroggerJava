@@ -7,10 +7,8 @@ import Resources.Images;
 import UI.UIImageButton;
 import UI.UIManager;
 public class GameOverState extends State{
-
 	private int count = 0;
 	private UIManager uiManager;
-
 	public GameOverState(Handler handler) {
 		super(handler);
 		uiManager = new UIManager(handler);
@@ -35,13 +33,12 @@ public class GameOverState extends State{
 			count=0;
 			State.setState(handler.getGame().gameState);
 		}
-
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Images.GameOver,0,0,handler.getGame().getWidth(),handler.getGame().getHeight(),null);
-		//g.drawString(String.valueOf(handler.getPlayer().Score), handler.getWidth()/2, handler.getHeight()/4);
+		///g.drawString(String.valueOf(handler.getScore()), handler.getWidth()/2, handler.getHeight()/4);   <====
 		uiManager.Render(g);
 	}
 

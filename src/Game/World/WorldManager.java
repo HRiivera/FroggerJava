@@ -107,7 +107,6 @@ public class WorldManager {
 	}
 
 	public void tick() {
-
 		if(this.handler.getKeyManager().keyJustPressed(this.handler.getKeyManager().num[2])) {
 			this.object2.word = this.object2.word + this.handler.getKeyManager().str[1];
 		}
@@ -199,6 +198,12 @@ public class WorldManager {
 			}
 
 		}
+		if(player.facing =="UP" &&player.getY()>handler.getHeight()+64) {
+			State.setState(handler.getGame().gameOverState);
+		}
+		else if(player.facing !="UP" &&player.getY()>handler.getHeight()) {
+			State.setState(handler.getGame().gameOverState);
+		}
 
 		HazardMovement();
 		player.tick();
@@ -286,10 +291,9 @@ public class WorldManager {
 
 		}
 	}
-
+	
 
 	public void render(Graphics g){
-
 		for(BaseArea area : SpawnedAreas) {
 			area.render(g);
 		}

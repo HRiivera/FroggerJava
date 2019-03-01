@@ -21,7 +21,6 @@ public class GameState extends State {
 	
 	private Player player;
 
-
     public GameState(Handler handler){
         super(handler);
         handler.setEntityManager(new EntityManager(handler));
@@ -37,7 +36,6 @@ public class GameState extends State {
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
         	State.setState(handler.getGame().pauseState);
         }
-       
 
     }
 

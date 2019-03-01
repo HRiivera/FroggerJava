@@ -18,7 +18,7 @@ public class Handler {
     private WorldManager world;
     private Player player;
     public static String str = Animation.getLtr();
-
+    private int Score;
 
     public Handler(GameSetUp game){
         this.game = game;
@@ -71,4 +71,6 @@ public class Handler {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    
 }

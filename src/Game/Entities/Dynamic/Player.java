@@ -5,6 +5,7 @@ import Game.Entities.Static.Tree;
 import Game.World.WorldManager;
 import Main.Handler;
 import Resources.Images;
+import Resources.MusicHandler;
 import UI.UIManager;
 
 import javax.swing.JFrame;
@@ -95,7 +96,6 @@ public class Player extends EntityBase {
 		/////////////////MOVE UP///////////////
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP") && getY() > 64) {
 			moving=true;
-
 		}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && !moving && facing.equals("UP") && getY() <= 0){
 			moving=false;
 		}
@@ -192,7 +192,6 @@ public class Player extends EntityBase {
 				else if (!moving && collided){
 					collided = false;
 				}
-
 			}
 			if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W) && facing == "UP" && moving && pointCooldown == false) {		
 				if (Score<=SubScore) {Score+=1;}
@@ -206,20 +205,8 @@ public class Player extends EntityBase {
 			else if(!moving) {
 				pointCooldown = false;
 			}
-
-
-
 		}
-
-
-
-
-
-
-
 	}
-
-
 
 	private void animateMovement(){
 		if(index==8) {
@@ -279,6 +266,8 @@ public class Player extends EntityBase {
 			g.drawImage(rotateClockwise90(Images.Player[index]), getX(), getY(), -1 * getWidth(), getHeight(), null);
 			break;
 		}
+		
+		//////Displays Score
 		g.setFont(new Font("TimesRoman", Font.BOLD, 50));
 		g.setColor(Color.RED);
 		g.drawString(String.valueOf(this.Score),handler.getWidth()-75,50);
