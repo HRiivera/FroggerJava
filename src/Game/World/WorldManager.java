@@ -6,6 +6,7 @@ import Game.Entities.Static.Log;
 import Game.Entities.Static.StaticBase;
 import Game.Entities.Static.Tree;
 import Game.Entities.Static.Turtle;
+import Game.GameStates.State;
 import Main.Handler;
 import UI.UIManager;
 
@@ -28,7 +29,7 @@ public class WorldManager {
 
 	private ArrayList<BaseArea> SpawnedAreas;		// Areas currently on world
 	////
-
+	
 	////
 	private ArrayList<StaticBase> SpawnedHazards;			// Hazards currently on world.
 
@@ -157,7 +158,17 @@ public class WorldManager {
 					&& player.getY() - SpawnedAreas.get(i).getYPosition() < 3) {
 				player.setY(SpawnedAreas.get(i).getYPosition());
 			}
+			
+			if(SpawnedAreas.get(i) instanceof WaterArea) {
+			//if(player.getPlayerCollision().intersects(WaterArea.GetCollision()))
+			//		State.setState(handler.getGame().gameOverState);
+			}
+			
+		
 		}
+		
+		
+		
 
 		HazardMovement();
 		player.tick();
