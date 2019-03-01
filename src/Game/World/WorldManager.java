@@ -159,6 +159,20 @@ public class WorldManager {
 					&& player.getY() - SpawnedAreas.get(i).getYPosition() < 3) {
 				player.setY(SpawnedAreas.get(i).getYPosition());
 			}
+			
+			
+			
+			
+			/////Detects what Area the frog is in
+			for(int j=0;j<SpawnedHazards.size();j++) {
+				int tolerance = 5;
+				if(SpawnedAreas.get(i) instanceof WaterArea && player.facing == "UP" && player.getY() > SpawnedAreas.get(i).getYPosition()+64-tolerance && player.getY() < SpawnedAreas.get(i).getYPosition()+64+tolerance) {
+					System.out.println(SpawnedAreas.get(i).toString());
+				}
+				else if(SpawnedAreas.get(i) instanceof WaterArea && player.facing !="UP" && player.getY() > SpawnedAreas.get(i).getYPosition()-tolerance && player.getY() < SpawnedAreas.get(i).getYPosition()+tolerance) {
+					System.out.println(SpawnedAreas.get(i).toString());
+				}
+			}
 		}
 
 		HazardMovement();
@@ -207,19 +221,19 @@ public class WorldManager {
 			////     //Tree Boundries
 			if(getSpawnedHazards().get(i) instanceof Tree) {
 				if (getSpawnedHazards().get(i).GetCollision() != null
-				&& player.getPlayerCollision().intersects(getSpawnedHazards().get(i).GetCollision())) {
-			if(player.facing=="RIGHT") {
-				player.setX(SpawnedHazards.get(i).getX()-SpawnedHazards.get(i).getX()%64);
-			}else if(player.facing=="LEFT") {
-				player.setX(SpawnedHazards.get(i).getX()+64-SpawnedHazards.get(i).getX()%64);
-			}
-			else if(player.facing.equals("UP")) {
-				
-				player.setY(SpawnedHazards.get(i).getY()+126+movementSpeed);
-			}else if(player.facing.equals("DOWN")) {
-				player.setY(SpawnedHazards.get(i).getY()-64-movementSpeed);
-			}
-			}
+						&& player.getPlayerCollision().intersects(getSpawnedHazards().get(i).GetCollision())) {
+					if(player.facing=="RIGHT") {
+						player.setX(SpawnedHazards.get(i).getX()-SpawnedHazards.get(i).getX()%64);
+					}else if(player.facing=="LEFT") {
+						player.setX(SpawnedHazards.get(i).getX()+64-SpawnedHazards.get(i).getX()%64);
+					}
+					else if(player.facing.equals("UP")) {
+
+						player.setY(SpawnedHazards.get(i).getY()+126+movementSpeed);
+					}else if(player.facing.equals("DOWN")) {
+						player.setY(SpawnedHazards.get(i).getY()-64-movementSpeed);
+					}
+				}
 			}
 			////
 
@@ -239,9 +253,9 @@ public class WorldManager {
 				}
 
 			}
-			
-			
-			
+
+
+
 		}
 	}
 
@@ -306,9 +320,9 @@ public class WorldManager {
 		// Chooses between Log or Lillypad
 		if (choice <=2) {
 			randInt = 64 * rand.nextInt(4);
-			
+
 			for(int i=0;i<numbOfSpawns;i++) {
-							SpawnedHazards.add(new Log(handler,i*192, yPosition));
+				SpawnedHazards.add(new Log(handler,i*192, yPosition));
 			}
 
 		}
@@ -324,12 +338,12 @@ public class WorldManager {
 
 			else {
 				for(int i=0;i<numbOfSpawns;i++) {
-				SpawnedHazards.add(new Turtle(handler, 576 - i*192, yPosition));
+					SpawnedHazards.add(new Turtle(handler, 576 - i*192, yPosition));
 				}
 			}
-			}
 		}
-	
+	}
+
 	////
 	private void SpawnTree(int yPosition) {
 
@@ -345,7 +359,7 @@ public class WorldManager {
 				getSpawnedHazards().add(new Grass(handler,64*x,yPosition));
 			}
 		}
-		
+
 	}
 	////
 
