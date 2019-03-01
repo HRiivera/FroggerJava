@@ -168,11 +168,19 @@ public class WorldManager {
 			/////Detects what Area the frog is in
 			for(int j=0;j<SpawnedHazards.size();j++) {
 				int tolerance = 5;
-				if(SpawnedAreas.get(i) instanceof WaterArea && player.facing == "UP" && player.getY() > SpawnedAreas.get(i).getYPosition()+64-tolerance && player.getY() < SpawnedAreas.get(i).getYPosition()+64+tolerance) {
-					System.out.println(SpawnedAreas.get(i).toString());
+				if(SpawnedAreas.get(i) instanceof WaterArea && player.facing == "UP" 
+						&& player.getY() > SpawnedAreas.get(i).getYPosition()+64-tolerance 
+						&& player.getY() < SpawnedAreas.get(i).getYPosition()+64+tolerance
+						&& SpawnedHazards.get(j).GetCollision() != null
+						&& player.getPlayerCollision().intersects(SpawnedHazards.get(j).GetCollision())==false) {
+					State.setState(handler.getGame().gameOverState);
 				}
-				else if(SpawnedAreas.get(i) instanceof WaterArea && player.facing !="UP" && player.getY() > SpawnedAreas.get(i).getYPosition()-tolerance && player.getY() < SpawnedAreas.get(i).getYPosition()+tolerance) {
-					System.out.println(SpawnedAreas.get(i).toString());
+				else if(SpawnedAreas.get(i) instanceof WaterArea && player.facing !="UP" 
+						&& player.getY() > SpawnedAreas.get(i).getYPosition()-tolerance 
+						&& player.getY() < SpawnedAreas.get(i).getYPosition()+tolerance
+						&& SpawnedHazards.get(j).GetCollision() != null
+						&& player.getPlayerCollision().intersects(SpawnedHazards.get(j).GetCollision())==false) {
+					State.setState(handler.getGame().gameOverState);
 				}
 			}
 		}
@@ -257,6 +265,9 @@ public class WorldManager {
 					getSpawnedHazards().set(i, new Turtle(handler, handler.getWidth()+64, getSpawnedHazards().get(i).getY()));
 				}
 
+				
+				
+				
 			}
 
 
