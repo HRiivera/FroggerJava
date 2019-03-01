@@ -30,7 +30,7 @@ public class WorldManager {
 
 	private ArrayList<BaseArea> SpawnedAreas;		// Areas currently on world
 	////
-	
+
 	////
 	private ArrayList<StaticBase> SpawnedHazards;			// Hazards currently on world.
 
@@ -160,33 +160,42 @@ public class WorldManager {
 					&& player.getY() - SpawnedAreas.get(i).getYPosition() < 3) {
 				player.setY(SpawnedAreas.get(i).getYPosition());
 			}
-			
 
-			
-			
-			
-			/////Detects what Area the frog is in
-			for(int j=0;j<SpawnedHazards.size();j++) {
-				int tolerance = 5;
-				if(SpawnedAreas.get(i) instanceof WaterArea && player.facing == "UP" 
-						&& player.getY() > SpawnedAreas.get(i).getYPosition()+64-tolerance 
-						&& player.getY() < SpawnedAreas.get(i).getYPosition()+64+tolerance
-						&& SpawnedHazards.get(j).GetCollision() != null
-						&& player.getPlayerCollision().intersects(SpawnedHazards.get(j).GetCollision())==false) {
-					State.setState(handler.getGame().gameOverState);
+
+
+
+
+			/////Detects what Area the frog is in and kills if in the water with no hazards.
+			boolean onhazard = false;
+			int tolerance = 5;
+			if(SpawnedAreas.get(i) instanceof WaterArea && player.facing == "UP" 
+					&& player.getY() > SpawnedAreas.get(i).getYPosition()+64-tolerance 
+					&& player.getY() < SpawnedAreas.get(i).getYPosition()+64+tolerance) {
+				for(int j=0;j<SpawnedHazards.size();j++) {
+					if (getSpawnedHazards().get(j).GetCollision() != null
+							&& player.getPlayerCollision().intersects(getSpawnedHazards().get(j).GetCollision())) {
+						onhazard = true;
+					}
 				}
-				else if(SpawnedAreas.get(i) instanceof WaterArea && player.facing !="UP" 
-						&& player.getY() > SpawnedAreas.get(i).getYPosition()-tolerance 
-						&& player.getY() < SpawnedAreas.get(i).getYPosition()+tolerance
-						&& SpawnedHazards.get(j).GetCollision() != null
-						&& player.getPlayerCollision().intersects(SpawnedHazards.get(j).GetCollision())==false) {
+				if (!onhazard){
 					State.setState(handler.getGame().gameOverState);
 				}
 			}
+			else if(SpawnedAreas.get(i) instanceof WaterArea && player.facing !="UP" 
+					&& player.getY() > SpawnedAreas.get(i).getYPosition()-tolerance 
+					&& player.getY() < SpawnedAreas.get(i).getYPosition()+tolerance) {
+				for(int j=0;j<SpawnedHazards.size();j++) {
+					if (getSpawnedHazards().get(j).GetCollision() != null
+							&& player.getPlayerCollision().intersects(getSpawnedHazards().get(j).GetCollision())) {
+						onhazard = true;
+					}
+				}
+				if (!onhazard){
+					State.setState(handler.getGame().gameOverState);
+				}
+			}
+
 		}
-		
-		
-		
 
 		HazardMovement();
 		player.tick();
@@ -265,9 +274,9 @@ public class WorldManager {
 					getSpawnedHazards().set(i, new Turtle(handler, handler.getWidth()+64, getSpawnedHazards().get(i).getY()));
 				}
 
-				
-				
-				
+
+
+
 			}
 
 
