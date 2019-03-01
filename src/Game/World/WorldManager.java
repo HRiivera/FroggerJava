@@ -266,7 +266,7 @@ public class WorldManager {
 			}
 			if(getSpawnedHazards().get(i) instanceof Log) {
 				if (getSpawnedHazards().get(i).getX() > handler.getWidth()) {
-					getSpawnedHazards().set(i, new Log(handler, -64, getSpawnedHazards().get(i).getY()));
+					getSpawnedHazards().set(i, new Log(handler, -128, getSpawnedHazards().get(i).getY()));
 				}
 			}
 			else if(getSpawnedHazards().get(i) instanceof Turtle) {
